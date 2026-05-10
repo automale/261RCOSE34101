@@ -1,32 +1,11 @@
 #include "data_struct.h"
 
-// #define DEGREE_MULTI 20
-// #define MAX_IO_PER_TASK 10
-// #define MAX_PRIOR 20
+int compare_arrival(const void *a, const void *b);
 
-// // ========================================
-// // 0. IO timing and device number specificating struct
-// struct io_config{
-//     unsigned time_list;
-//     unsigned device_num;
-// };
-// typedef io_config io_config;
-// typedef io_config *io_ptr;
+void sort_test_case_by_arrival(it_ptr tcase);
 
-// // ========================================
-// // 1. ready queue data structure
-// struct common_task{
-//     pid_t pid;
-//     unsigned arrival;
-//     unsigned remaining;
-//     io_config io_list[MAX_IO_PER_TASK];
-// };
-// typedef common_task common_task;
-// typedef common_task *c_task_ptr;
+it_ptr test_case_gen();
 
-// struct input_tasks{
-//     common_task task_list[DEGREE_MULTI]; // sorted in non-decreasing order by arrival time
-//     unsigned size;
-// };
+int test_case_destroyer(it_ptr tcase);
 
-// input_task gen random
+int print_test_case_to_file(it_ptr tcase, const char* filename);

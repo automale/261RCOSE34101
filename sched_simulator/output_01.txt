@@ -1,0 +1,289 @@
+========================================================================================
+                               OS SCHEDULER TEST CASE DATA.                             
+========================================================================================
+
+----------------------------------------------------------------------------------------
+[SECTION 1] TASK-CENTRIC VIEW (Sorted by Arrival Time)
+----------------------------------------------------------------------------------------
+Task [PID:   2] | Arrival:    2 | CPU Burst:   59 | I/O Count:  0 | Priority :   9
+
+Task [PID:  27] | Arrival:    3 | CPU Burst:   27 | I/O Count:  0 | Priority :  46
+
+Task [PID:  24] | Arrival:   10 | CPU Burst:    3 | I/O Count:  0 | Priority :  85
+
+Task [PID:   3] | Arrival:   14 | CPU Burst:   20 | I/O Count:  0 | Priority :  84
+
+Task [PID:  30] | Arrival:   14 | CPU Burst:   10 | I/O Count:  0 | Priority :  76
+
+Task [PID:  22] | Arrival:   15 | CPU Burst:   22 | I/O Count:  5 | Priority :  29
+    -> I/O Requests:
+       - Request at CPU Time    0 : Device  0 (Duration:   26 ms)
+       - Request at CPU Time    3 : Device  4 (Duration:    8 ms)
+       - Request at CPU Time   10 : Device  1 (Duration:   28 ms)
+       - Request at CPU Time   15 : Device  4 (Duration:   18 ms)
+       - Request at CPU Time   17 : Device  5 (Duration:   20 ms)
+
+Task [PID:  14] | Arrival:   24 | CPU Burst:   49 | I/O Count:  0 | Priority :  33
+
+Task [PID:  12] | Arrival:   29 | CPU Burst:   68 | I/O Count:  2 | Priority :  74
+    -> I/O Requests:
+       - Request at CPU Time   31 : Device  7 (Duration:   28 ms)
+       - Request at CPU Time   52 : Device  2 (Duration:   34 ms)
+
+Task [PID:  29] | Arrival:   44 | CPU Burst:   17 | I/O Count:  2 | Priority :  30
+    -> I/O Requests:
+       - Request at CPU Time    5 : Device  4 (Duration:   41 ms)
+       - Request at CPU Time    6 : Device  5 (Duration:   28 ms)
+
+Task [PID:   7] | Arrival:   50 | CPU Burst:   32 | I/O Count:  2 | Priority :  97
+    -> I/O Requests:
+       - Request at CPU Time    5 : Device  9 (Duration:   44 ms)
+       - Request at CPU Time   26 : Device  4 (Duration:    0 ms)
+
+Task [PID:  23] | Arrival:   55 | CPU Burst:   60 | I/O Count:  3 | Priority :  88
+    -> I/O Requests:
+       - Request at CPU Time   17 : Device  2 (Duration:   28 ms)
+       - Request at CPU Time   35 : Device  7 (Duration:   49 ms)
+       - Request at CPU Time   42 : Device  2 (Duration:   26 ms)
+
+Task [PID:  26] | Arrival:   56 | CPU Burst:   28 | I/O Count:  0 | Priority :  94
+
+Task [PID:   1] | Arrival:   64 | CPU Burst:   27 | I/O Count:  6 | Priority :   4
+    -> I/O Requests:
+       - Request at CPU Time    1 : Device  5 (Duration:   40 ms)
+       - Request at CPU Time    4 : Device  4 (Duration:    8 ms)
+       - Request at CPU Time   12 : Device  1 (Duration:   46 ms)
+       - Request at CPU Time   16 : Device  0 (Duration:   10 ms)
+       - Request at CPU Time   18 : Device  2 (Duration:   38 ms)
+       - Request at CPU Time   25 : Device  8 (Duration:   15 ms)
+
+Task [PID:  25] | Arrival:   69 | CPU Burst:   88 | I/O Count:  5 | Priority :   6
+    -> I/O Requests:
+       - Request at CPU Time   15 : Device  1 (Duration:   31 ms)
+       - Request at CPU Time   42 : Device  7 (Duration:   42 ms)
+       - Request at CPU Time   47 : Device  3 (Duration:   12 ms)
+       - Request at CPU Time   67 : Device  8 (Duration:   28 ms)
+       - Request at CPU Time   73 : Device  0 (Duration:   35 ms)
+
+Task [PID:  21] | Arrival:   70 | CPU Burst:   84 | I/O Count:  6 | Priority :  84
+    -> I/O Requests:
+       - Request at CPU Time   29 : Device  4 (Duration:    1 ms)
+       - Request at CPU Time   50 : Device  5 (Duration:   17 ms)
+       - Request at CPU Time   54 : Device  9 (Duration:   18 ms)
+       - Request at CPU Time   58 : Device  6 (Duration:   16 ms)
+       - Request at CPU Time   66 : Device  7 (Duration:   13 ms)
+       - Request at CPU Time   68 : Device  5 (Duration:   13 ms)
+
+Task [PID:  17] | Arrival:   71 | CPU Burst:   78 | I/O Count:  6 | Priority :  63
+    -> I/O Requests:
+       - Request at CPU Time   40 : Device  0 (Duration:   16 ms)
+       - Request at CPU Time   49 : Device  3 (Duration:   41 ms)
+       - Request at CPU Time   56 : Device  3 (Duration:   18 ms)
+       - Request at CPU Time   57 : Device  3 (Duration:   27 ms)
+       - Request at CPU Time   60 : Device  7 (Duration:   24 ms)
+       - Request at CPU Time   76 : Device  8 (Duration:   38 ms)
+
+Task [PID:   4] | Arrival:   84 | CPU Burst:   75 | I/O Count:  3 | Priority :  18
+    -> I/O Requests:
+       - Request at CPU Time   34 : Device  4 (Duration:   16 ms)
+       - Request at CPU Time   41 : Device  0 (Duration:   22 ms)
+       - Request at CPU Time   61 : Device  0 (Duration:   42 ms)
+
+Task [PID:   5] | Arrival:   91 | CPU Burst:   87 | I/O Count: 10 | Priority :  55
+    -> I/O Requests:
+       - Request at CPU Time    4 : Device  3 (Duration:   21 ms)
+       - Request at CPU Time   20 : Device  3 (Duration:    6 ms)
+       - Request at CPU Time   25 : Device  4 (Duration:   15 ms)
+       - Request at CPU Time   30 : Device  8 (Duration:   24 ms)
+       - Request at CPU Time   32 : Device  7 (Duration:   40 ms)
+       - Request at CPU Time   37 : Device  4 (Duration:   49 ms)
+       - Request at CPU Time   41 : Device  5 (Duration:   48 ms)
+       - Request at CPU Time   64 : Device  4 (Duration:   35 ms)
+       - Request at CPU Time   75 : Device  9 (Duration:   16 ms)
+       - Request at CPU Time   82 : Device  3 (Duration:    7 ms)
+
+Task [PID:  13] | Arrival:  104 | CPU Burst:   67 | I/O Count:  4 | Priority :  14
+    -> I/O Requests:
+       - Request at CPU Time    0 : Device  2 (Duration:   33 ms)
+       - Request at CPU Time   12 : Device  4 (Duration:   24 ms)
+       - Request at CPU Time   62 : Device  7 (Duration:   35 ms)
+       - Request at CPU Time   65 : Device  1 (Duration:   43 ms)
+
+Task [PID:   9] | Arrival:  106 | CPU Burst:   75 | I/O Count:  8 | Priority :  56
+    -> I/O Requests:
+       - Request at CPU Time    6 : Device  0 (Duration:   43 ms)
+       - Request at CPU Time    7 : Device  0 (Duration:   18 ms)
+       - Request at CPU Time    8 : Device  8 (Duration:   29 ms)
+       - Request at CPU Time    9 : Device  7 (Duration:   22 ms)
+       - Request at CPU Time   25 : Device  6 (Duration:    3 ms)
+       - Request at CPU Time   37 : Device  7 (Duration:   26 ms)
+       - Request at CPU Time   70 : Device  6 (Duration:   21 ms)
+       - Request at CPU Time   71 : Device  7 (Duration:   34 ms)
+
+Task [PID:  10] | Arrival:  116 | CPU Burst:   75 | I/O Count:  0 | Priority :  58
+
+Task [PID:  15] | Arrival:  120 | CPU Burst:   85 | I/O Count:  0 | Priority :   9
+
+Task [PID:  20] | Arrival:  122 | CPU Burst:   63 | I/O Count:  0 | Priority :   6
+
+Task [PID:  19] | Arrival:  132 | CPU Burst:   37 | I/O Count:  4 | Priority :  85
+    -> I/O Requests:
+       - Request at CPU Time    3 : Device  6 (Duration:   33 ms)
+       - Request at CPU Time   18 : Device  8 (Duration:    4 ms)
+       - Request at CPU Time   22 : Device  2 (Duration:   22 ms)
+       - Request at CPU Time   34 : Device  3 (Duration:   22 ms)
+
+Task [PID:   8] | Arrival:  135 | CPU Burst:    7 | I/O Count:  0 | Priority :  47
+
+Task [PID:  16] | Arrival:  145 | CPU Burst:   35 | I/O Count:  0 | Priority :  79
+
+Task [PID:  18] | Arrival:  146 | CPU Burst:   48 | I/O Count:  2 | Priority :  20
+    -> I/O Requests:
+       - Request at CPU Time   38 : Device  5 (Duration:   33 ms)
+       - Request at CPU Time   46 : Device  5 (Duration:   49 ms)
+
+Task [PID:  28] | Arrival:  157 | CPU Burst:   17 | I/O Count:  1 | Priority :  74
+    -> I/O Requests:
+       - Request at CPU Time   15 : Device  5 (Duration:    6 ms)
+
+Task [PID:   0] | Arrival:  167 | CPU Burst:    7 | I/O Count:  0 | Priority :   1
+
+Task [PID:   6] | Arrival:  176 | CPU Burst:   40 | I/O Count:  3 | Priority :  47
+    -> I/O Requests:
+       - Request at CPU Time   14 : Device  0 (Duration:   13 ms)
+       - Request at CPU Time   19 : Device  9 (Duration:   40 ms)
+       - Request at CPU Time   32 : Device  0 (Duration:   33 ms)
+
+Task [PID:  11] | Arrival:  177 | CPU Burst:   64 | I/O Count:  6 | Priority :  24
+    -> I/O Requests:
+       - Request at CPU Time    3 : Device  7 (Duration:   17 ms)
+       - Request at CPU Time   14 : Device  2 (Duration:    4 ms)
+       - Request at CPU Time   17 : Device  0 (Duration:   44 ms)
+       - Request at CPU Time   40 : Device  0 (Duration:   27 ms)
+       - Request at CPU Time   42 : Device  8 (Duration:   46 ms)
+       - Request at CPU Time   60 : Device  6 (Duration:    6 ms)
+
+----------------------------------------------------------------------------------------
+[SECTION 2] DEVICE-CENTRIC VIEW (Expected Requests per Device)
+----------------------------------------------------------------------------------------
+[Device  0]
+    Req PID | Req CPU Time | Duration 
+   ---------+--------------+----------
+       22   |        0     |     26   
+        1   |       16     |     10   
+       25   |       73     |     35   
+       17   |       40     |     16   
+        4   |       41     |     22   
+        4   |       61     |     42   
+        9   |        6     |     43   
+        9   |        7     |     18   
+        6   |       14     |     13   
+        6   |       32     |     33   
+       11   |       17     |     44   
+       11   |       40     |     27   
+
+[Device  1]
+    Req PID | Req CPU Time | Duration 
+   ---------+--------------+----------
+       22   |       10     |     28   
+        1   |       12     |     46   
+       25   |       15     |     31   
+       13   |       65     |     43   
+
+[Device  2]
+    Req PID | Req CPU Time | Duration 
+   ---------+--------------+----------
+       12   |       52     |     34   
+       23   |       17     |     28   
+       23   |       42     |     26   
+        1   |       18     |     38   
+       13   |        0     |     33   
+       19   |       22     |     22   
+       11   |       14     |      4   
+
+[Device  3]
+    Req PID | Req CPU Time | Duration 
+   ---------+--------------+----------
+       25   |       47     |     12   
+       17   |       49     |     41   
+       17   |       56     |     18   
+       17   |       57     |     27   
+        5   |        4     |     21   
+        5   |       20     |      6   
+        5   |       82     |      7   
+       19   |       34     |     22   
+
+[Device  4]
+    Req PID | Req CPU Time | Duration 
+   ---------+--------------+----------
+       22   |        3     |      8   
+       22   |       15     |     18   
+       29   |        5     |     41   
+        7   |       26     |      0   
+        1   |        4     |      8   
+       21   |       29     |      1   
+        4   |       34     |     16   
+        5   |       25     |     15   
+        5   |       37     |     49   
+        5   |       64     |     35   
+       13   |       12     |     24   
+
+[Device  5]
+    Req PID | Req CPU Time | Duration 
+   ---------+--------------+----------
+       22   |       17     |     20   
+       29   |        6     |     28   
+        1   |        1     |     40   
+       21   |       50     |     17   
+       21   |       68     |     13   
+        5   |       41     |     48   
+       18   |       38     |     33   
+       18   |       46     |     49   
+       28   |       15     |      6   
+
+[Device  6]
+    Req PID | Req CPU Time | Duration 
+   ---------+--------------+----------
+       21   |       58     |     16   
+        9   |       25     |      3   
+        9   |       70     |     21   
+       19   |        3     |     33   
+       11   |       60     |      6   
+
+[Device  7]
+    Req PID | Req CPU Time | Duration 
+   ---------+--------------+----------
+       12   |       31     |     28   
+       23   |       35     |     49   
+       25   |       42     |     42   
+       21   |       66     |     13   
+       17   |       60     |     24   
+        5   |       32     |     40   
+       13   |       62     |     35   
+        9   |        9     |     22   
+        9   |       37     |     26   
+        9   |       71     |     34   
+       11   |        3     |     17   
+
+[Device  8]
+    Req PID | Req CPU Time | Duration 
+   ---------+--------------+----------
+        1   |       25     |     15   
+       25   |       67     |     28   
+       17   |       76     |     38   
+        5   |       30     |     24   
+        9   |        8     |     29   
+       19   |       18     |      4   
+       11   |       42     |     46   
+
+[Device  9]
+    Req PID | Req CPU Time | Duration 
+   ---------+--------------+----------
+        7   |        5     |     44   
+       21   |       54     |     18   
+        5   |       75     |     16   
+        6   |       19     |     40   
+
+========================================================================================
+                                      END OF DATA                                       
+========================================================================================
