@@ -16,6 +16,7 @@
 #define MIN_TOTAL_EXTIME 500
 #define MAX_TOTAL_EXTIME 5000
 
+#define QUANTA 5
 #define MAX_PRIOR 100
 
 #define DEVICES 10
@@ -38,7 +39,7 @@ typedef struct io_config *io_ptr;
 // 1. ready queue data structure
 struct common_task{
     // ps(task) info
-    pid_t pid;
+    unsigned pid;
     unsigned arrival;
     unsigned burst;
     unsigned remaining;
@@ -93,6 +94,8 @@ typedef struct rq_pqueue rq_PQ;
 typedef struct rq_pqueue *rq_PQptr;
 
 //=========== priority ready queue method ===========
+rq_PQptr rpq_init();
+int pq_empty(rq_PQptr pq);
 // swap function
 int swap_task_pq(tpq_ptr *a, tpq_ptr *b);
 int min_heapify(rq_PQptr pq, tpq_ptr *node);
@@ -146,5 +149,7 @@ struct sched_queue{
 typedef struct sched_queue sched_queue;
 typedef struct sched_queue *schq_ptr;
 
-int schq_enqueue(schq_ptr queue, unsigned _pid, unsigned _start, unsigned _end);
+sch_ptr shced_init(unsigned _pid, unsigned _start, unsigned _end);
+schq_ptr sched_queue_init();
+int schq_enqueue(schq_ptr queue, sch_ptr node);
 sched schq_dequeue(schq_ptr queue);

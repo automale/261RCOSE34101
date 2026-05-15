@@ -47,6 +47,17 @@ tq_ptr rq_dequeue(rq_Qptr rq){
 }
 
 //=========== priority ready queue method ===========
+rq_PQptr rpq_init(){
+    rq_PQptr rpq = malloc(sizeof(rq_PQ));
+    rpq->min_heap = malloc(sizeof(tpq_ptr) * MAX_DEGREE_MULTI);
+    rpq->size = 0;
+    return rpq;
+}
+
+int pq_empty(rq_PQptr pq){
+    return (pq->size == 0);
+}
+
 // swap function
 int swap_task_pq(tpq_ptr *a, tpq_ptr *b){
     if(!a || !b) return -1;
@@ -186,26 +197,32 @@ void* io_dequeue(ioq_ptr q) {
 }
 
 // ============== gant chart method ==============
-int schq_enqueue(schq_ptr queue, unsigned _pid, unsigned _start, unsigned _end){
-    sch_ptr new_sched_ptr = malloc(sizeof(sched));
-    if (new_sched_ptr == NULL) return -1;
+sch_ptr shced_init(unsigned _pid, unsigned _start, unsigned _end){
+    sch_ptr ret_sched = malloc(sizeof(sched));
+    ret_sched->pid = _pid;
+    ret_sched->start = _start;
+    ret_sched->end = _end;
+    ret_sched->next = NULL;
+}
 
-    new_sched_ptr->pid = _pid;
-    new_sched_ptr->start = _start;
-    new_sched_ptr->end = _end;
-    new_sched_ptr->next = NULL;
+schq_ptr sched_queue_init(){
+    schq_ptr sq = malloc(sizeof(sched_queue));
+    sq->front = sq->end = NULL;
+    sq->size = 0;
+}
 
+int schq_enqueue(schq_ptr queue, sch_ptr node){
+    // if queue was empty
     if (queue->size == 0){
-        queue->front = queue->end = new_sched_ptr;
+        queue->front = queue->end = node;
         queue->size += 1;
     }
-
+    // if queue was not empty
     else{
-        queue->end->next = new_sched_ptr;
-        queue->end = new_sched_ptr;
+        queue->end->next = node;
+        queue->end = node;
         queue->size += 1;
     }
-
     return 1;
 }
 
