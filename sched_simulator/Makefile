@@ -7,7 +7,7 @@ TARGET = scheduler_sim
 
 # 3. 소스 파일 및 오브젝트 파일 목록 (여기에 .c 파일만 나열하면 됩니다)
 # SRCS = simulation.c data_struct.c sched.c test_gen.c
-SRCS = main.c simulation.c data_struct.c test_gen.c
+SRCS = main.c simulation.c data_struct.c sched.c test_gen.c draw_gantt.c
 OBJS = $(SRCS:.c=.o)
 
 # 4. 기본 타겟
@@ -26,7 +26,17 @@ $(OBJS): data_struct.h
 
 # 8. 정리 및 실행 명령어
 clean:
-	rm -f $(OBJS) $(TARGET) output.txt
+	rm -rf output_gantt
+	rm -rf output_testcase
+	mkdir output_gantt
+	mkdir output_gantt/fcfs
+	mkdir output_gantt/rr
+	mkdir output_gantt/sjf
+	mkdir output_gantt/pre_sjf
+	mkdir output_gantt/prior
+	mkdir output_gantt/pre_prior
+	mkdir output_testcase
+	rm -f $(OBJS) $(TARGET)
 
 run: $(TARGET)
 	./$(TARGET)

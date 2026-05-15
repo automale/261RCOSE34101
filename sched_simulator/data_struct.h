@@ -149,7 +149,7 @@ struct sched_queue{
 typedef struct sched_queue sched_queue;
 typedef struct sched_queue *schq_ptr;
 
-sch_ptr shced_init(unsigned _pid, unsigned _start, unsigned _end);
+sch_ptr sched_init(unsigned _pid, unsigned _start, unsigned _end);
 schq_ptr sched_queue_init();
 int schq_enqueue(schq_ptr queue, sch_ptr node);
 sched schq_dequeue(schq_ptr queue);

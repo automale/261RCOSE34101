@@ -109,7 +109,7 @@ unsigned tick(void* q, it_ptr tcase, void** running, void *prev_running, ioq_ptr
                 break;
             default :
         }
-        if(running != NULL) return (*(tq_ptr*)running)->info.pid;
+        if(*running != NULL) return ((tq_ptr)(*running))->info.pid;
         else return (unsigned)(-1);
     }
     else{
@@ -129,7 +129,7 @@ unsigned tick(void* q, it_ptr tcase, void** running, void *prev_running, ioq_ptr
                 break;
             default :
         }
-        if(running != NULL) return (*(tpq_ptr*)running)->info.pid;
+        if(*running != NULL) return ((tpq_ptr)(*running))->info.pid;
         else return (unsigned)(-1);
     }
 }
@@ -156,7 +156,6 @@ schq_ptr sched_simulation(it_ptr tcase, sched_alg alg){
     while( terminate_cnt < tcase->size ){
         // running update, io waiting queue update + scheduling (running update)
         curr_pid = tick(rq, tcase, &running, prev_running, io_qs, ++curr_time, &terminate_cnt ,alg);
-
         // node generation and enqueue in result node
         if(prev_pid != curr_pid || result_gant->size == 0 ){
             if( result_gant->size != 0 ) result_gant->end->end = curr_time; 

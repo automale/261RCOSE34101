@@ -4,7 +4,7 @@
 
 //=========== FIFO ready queue method ===========
 rq_Qptr rq_queue_init(void){
-    rq_Qptr new_rq = (struct rq_queue *)malloc(sizeof(rq_Q));
+    rq_Qptr new_rq = (struct rq_queue *)calloc(1, sizeof(rq_Q));
     new_rq->front = NULL;
     new_rq->end = NULL;
     new_rq->size = 0;
@@ -22,6 +22,7 @@ int rq_queue_empty(rq_Qptr rq){
 }
 
 int rq_enqueue(rq_Qptr rq, tq_ptr new_task){
+    new_task->next = NULL;
     if(rq_queue_full(rq)) return 0;
     else if(rq_queue_empty(rq)){
         rq->front = new_task;
@@ -197,18 +198,20 @@ void* io_dequeue(ioq_ptr q) {
 }
 
 // ============== gant chart method ==============
-sch_ptr shced_init(unsigned _pid, unsigned _start, unsigned _end){
+sch_ptr sched_init(unsigned _pid, unsigned _start, unsigned _end){
     sch_ptr ret_sched = malloc(sizeof(sched));
     ret_sched->pid = _pid;
     ret_sched->start = _start;
     ret_sched->end = _end;
     ret_sched->next = NULL;
+    return ret_sched;
 }
 
 schq_ptr sched_queue_init(){
-    schq_ptr sq = malloc(sizeof(sched_queue));
+    schq_ptr sq = calloc(1, sizeof(sched_queue));
     sq->front = sq->end = NULL;
     sq->size = 0;
+    return sq;
 }
 
 int schq_enqueue(schq_ptr queue, sch_ptr node){

@@ -28,18 +28,17 @@ void sort_test_case_by_arrival(it_ptr tcase) {
 }
 
 it_ptr test_case_gen(){
-    srand(time(NULL));
     unsigned mdegree, Mextime_per_task, max_arrival;
     mdegree = rand() % (MAX_DEGREE_MULTI - MIN_DEGREE_MULTI) + MIN_DEGREE_MULTI;
     Mextime_per_task = (rand() % (MAX_TOTAL_EXTIME - MIN_TOTAL_EXTIME) + MIN_TOTAL_EXTIME) / mdegree;
-    max_arrival = Mextime_per_task * (rand() % mdegree);
+    max_arrival = Mextime_per_task * (rand() % mdegree + 1);
 
     it_ptr tcase = malloc(sizeof(input_tasks));
     tcase->task_list = malloc(sizeof(common_task) * mdegree);
     tcase->size = mdegree;
     tcase->next_arrival_idx = 0;
     for(int id = 0; id < (int)mdegree; id++){
-        unsigned io_partition, io_posb_mod, task_burst;
+        unsigned io_partition, io_posb_mod, task_burst, io_idx;
         // pid & arrival & remaining(cpu burst) setting
         tcase->task_list[id].pid = id;
         tcase->task_list[id].arrival = rand() % max_arrival;
@@ -51,21 +50,30 @@ it_ptr test_case_gen(){
         tcase->task_list[id].current_io_idx = 0;
         tcase->task_list[id].current_io_remaining = 0;
         // generate io events
-        io_partition = rand() % task_burst + 1;
-        io_posb_mod = rand() % MAX_IO_POSB_MOD + 1;
-        
-        io_ptr temp_io_list = malloc(sizeof(io_config) * io_partition);
-        unsigned io_idx = 0;
-        for(unsigned i = 0; i < io_partition; i++){
-            if(!(rand() % io_posb_mod)){
-                temp_io_list[io_idx].io_time = ((i * task_burst) / io_partition) + (rand() % (task_burst / io_partition));  
-                temp_io_list[io_idx].device_num = rand() % DEVICES;
-                temp_io_list[io_idx].duration = rand() % MAX_IO_DURATION;
-                io_idx++;
+        io_ptr temp_io_list = NULL;
+        io_idx = 0;
+        if(task_burst > 1){
+            io_partition = (rand() % task_burst) + 1;
+            io_posb_mod = rand() % MAX_IO_POSB_MOD + 1;
+            unsigned ex_chunk = task_burst / io_partition;
+
+            temp_io_list = malloc(sizeof(io_config) * io_partition);
+            for(unsigned i = 0; i < io_partition; i++){
+                if(!(rand() % io_posb_mod)){
+                    unsigned calc_time = (i * ex_chunk) + (rand() % ex_chunk) + 1;
+                    if(calc_time == task_burst) continue;
+
+                    temp_io_list[io_idx].io_time = calc_time;
+                    temp_io_list[io_idx].device_num = rand() % DEVICES;
+                    temp_io_list[io_idx].duration = rand() % MAX_IO_DURATION + 1;
+                    io_idx++;
+                }
             }
+            if(io_idx == 0) {free(temp_io_list); temp_io_list = NULL;}
+            else {temp_io_list = realloc(temp_io_list, sizeof(io_config) * io_idx);}
         }
         tcase->task_list[id].io_num = io_idx;
-        tcase->task_list[id].io_list = realloc(temp_io_list, sizeof(io_config) * tcase->task_list[id].io_num);
+        tcase->task_list[id].io_list = temp_io_list;
     }
     // sort tasks in increasing order, key = (arrival_time, pid)
     sort_test_case_by_arrival(tcase);

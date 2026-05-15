@@ -17,7 +17,7 @@ void fcfs_alg(rq_Qptr rq, tq_ptr *running){
 
 // case (*), (**)
 void rr_alg(rq_Qptr rq, tq_ptr *running, tq_ptr prev_running){
-    static quanta = -1;
+    static unsigned quanta = -1;
     quanta++;
     // idle -> idle 
     // ... time quanta init -1
