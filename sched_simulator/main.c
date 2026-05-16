@@ -1,10 +1,11 @@
 #include "simulation.h"
 #include "draw_gantt.h"
+#define BATCH 100
 
 int main(){
     srand(time(NULL));
     // test_generate
-    for(int i = 0; i < 1000; i++){
+    for(int i = 0; i < BATCH; i++){
         it_ptr tcase = test_case_gen();
         char test_filename[100];
         char gantt_filename[100];

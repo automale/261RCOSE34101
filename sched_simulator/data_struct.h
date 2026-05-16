@@ -130,6 +130,8 @@ struct input_tasks{
 typedef struct input_tasks input_tasks;
 typedef struct input_tasks *it_ptr;
 
+void rewind_input_task(it_ptr tcase);
+
 // ========================================
 // 4. gant chart data structure
 struct sched{

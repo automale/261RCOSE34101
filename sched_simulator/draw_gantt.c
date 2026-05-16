@@ -17,33 +17,29 @@ void print_gantt_to_file(schq_ptr queue, const char *filename) {
     fprintf(fp, "               OS Scheduler Gantt Chart             \n");
     fprintf(fp, "====================================================\n\n");
 
-    // 1. 시각적 타임라인 출력 (상단 바)
+    // 1. gantt chart print
     fprintf(fp, "Visual Timeline:\n");
     fprintf(fp, "----------------------------------------------------\n");
     
     sch_ptr curr = queue->front;
-    // 첫 번째 줄: 프로세스 이름 또는 IDLE 표시
+    // 1st line : | (start time) Pn  | ..... | (start time) Pm  |(end of gantt : ~~~)  
     fprintf(fp, "|");
     while (curr != NULL) {
-        if (curr->pid == (unsigned)-1) {
-            fprintf(fp, "  IDLE  |");
+        if (curr->pid == (unsigned)(-1)) {
+            fprintf(fp, "(%d)  IDLE   |", curr->start);
         } else {
-            fprintf(fp, "  P%-3d  |", curr->pid);
+            fprintf(fp, "(%d)  P%-3d  |", curr->start, curr->pid);
+        }
+        if(curr->next == NULL){
+            fprintf(fp, "(end of gantt : %d)", curr->end);
         }
         curr = curr->next;
     }
     fprintf(fp, "\n");
 
-    // 두 번째 줄: 시간 표시 (각 블록의 시작 시간)
-    curr = queue->front;
-    fprintf(fp, "%-3u", curr->start);
-    while (curr != NULL) {
-        fprintf(fp, "        %-3u", curr->end);
-        curr = curr->next;
-    }
-    fprintf(fp, "\n----------------------------------------------------\n\n");
+    fprintf(fp, "----------------------------------------------------\n\n");
 
-    // 2. 상세 실행 로그 출력 (표 형태)
+    // 2. table form scheduling print out
     fprintf(fp, "Detailed Execution Log:\n");
     fprintf(fp, "%-10s | %-10s | %-10s | %-10s\n", "Sequence", "PID", "Start", "End");
     fprintf(fp, "----------------------------------------------------\n");

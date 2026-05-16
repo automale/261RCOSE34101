@@ -169,6 +169,8 @@ schq_ptr sched_simulation(it_ptr tcase, sched_alg alg){
     }
     // end of the last gant node
     if(result_gant->size != 0){ result_gant->end->end = curr_time; }
-    
+
+    rewind_input_task(tcase);
+
     return result_gant;
 }

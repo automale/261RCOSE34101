@@ -197,6 +197,11 @@ void* io_dequeue(ioq_ptr q) {
     return task_ptr;
 }
 
+// ============== input test case method ================
+void rewind_input_task(it_ptr tcase){
+    tcase->next_arrival_idx = 0;
+}
+
 // ============== gant chart method ==============
 sch_ptr sched_init(unsigned _pid, unsigned _start, unsigned _end){
     sch_ptr ret_sched = malloc(sizeof(sched));
@@ -214,29 +219,29 @@ schq_ptr sched_queue_init(){
     return sq;
 }
 
-int schq_enqueue(schq_ptr queue, sch_ptr node){
-    // if queue was empty
-    if (queue->size == 0){
-        queue->front = queue->end = node;
-        queue->size += 1;
+int schq_enqueue(schq_ptr sq, sch_ptr node){
+    // if sq was empty
+    if (sq->size == 0){
+        sq->front = sq->end = node;
+        sq->size += 1;
     }
-    // if queue was not empty
+    // if sq was not empty
     else{
-        queue->end->next = node;
-        queue->end = node;
-        queue->size += 1;
+        sq->end->next = node;
+        sq->end = node;
+        sq->size += 1;
     }
     return 1;
 }
 
-sched schq_dequeue(schq_ptr queue){
-    if (queue->size <= 0) return (sched){0};
-    sch_ptr ret_sch_ptr = queue->front;
+sched schq_dequeue(schq_ptr sq){
+    if (sq->size <= 0) return (sched){0};
+    sch_ptr ret_sch_ptr = sq->front;
     sched ret_sch = *ret_sch_ptr;
     
-    queue->front = queue->front->next;
+    sq->front = sq->front->next;
     free(ret_sch_ptr);
-    queue->size -= 1;
+    sq->size -= 1;
     
     return ret_sch;
 }
