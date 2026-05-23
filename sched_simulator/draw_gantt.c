@@ -1,17 +1,63 @@
 #include "draw_gantt.h"
 
 // 간트 차트 생성 및 파일 출력 함수
-void print_gantt_to_file(schq_ptr queue, const char *filename) {
+void print_sched_to_file(schq_ptr queue, it_ptr tcase, const char *filename) {
     if (queue == NULL || queue->front == NULL) {
-        printf("출력할 간트 데이터가 없습니다.\n");
+        printf("NO schedule data to print out.\n");
         return;
     }
 
     FILE *fp = fopen(filename, "w");
     if (fp == NULL) {
-        perror("파일 열기 실패");
+        perror("file open failed.");
         return;
     }
+
+    unsigned total_time = 0;
+    unsigned idle_time = 0;
+    
+    // PID를 인덱스로 사용하여 프로세스별 최종 완료 시간(Completion Time)을 추적할 배열
+    unsigned *comp_time = malloc(tcase->size * sizeof(unsigned)); 
+    
+    sch_ptr temp = queue->front;
+    while (temp != NULL) {
+        if (temp->pid == (unsigned)-1) {
+            idle_time += (temp->end - temp->start); // IDLE time accumulation
+        } else {
+            comp_time[temp->pid] = temp->end; // termination time check
+        }
+        total_time = temp->end; // last sched node's end time is total end time...
+        temp = temp->next;
+    }
+
+    double cpu_util = (total_time > 0) ? ((double)(total_time - idle_time) / total_time) * 100.0 : 0.0;
+    double total_tat = 0.0;
+    double total_wt = 0.0;
+
+    for (unsigned i = 0; i < tcase->size; i++) {
+        unsigned pid = tcase->task_list[i].pid;
+        unsigned arr = tcase->task_list[i].arrival;
+        unsigned burst = tcase->task_list[i].burst;
+
+        unsigned io_total = 0;
+        for (unsigned j = 0; j < tcase->task_list[i].io_num; j++) {
+            io_total += tcase->task_list[i].io_list[j].duration; // total I/O waiting time
+        }
+
+        // Turnaround Time = termination time - arrival time
+        unsigned tat = comp_time[pid] - arr;
+        // Waiting Time = turnaround time - burst - I/O waiting time
+        unsigned wt = tat - burst - io_total;
+
+        total_tat += tat;
+        total_wt += wt;
+    }
+
+    double avg_tat = total_tat / tcase->size;
+    double avg_wt = total_wt / tcase->size;
+    
+    free(comp_time); 
+    // metric computation ends
 
     fprintf(fp, "====================================================\n");
     fprintf(fp, "               OS Scheduler Gantt Chart             \n");
@@ -55,9 +101,19 @@ void print_gantt_to_file(schq_ptr queue, const char *filename) {
         curr = curr->next;
     }
 
-    fprintf(fp, "----------------------------------------------------\n");
+    fprintf(fp, "----------------------------------------------------\n\n");
+
+    fprintf(fp, "====================================================\n");
+    fprintf(fp, "                 PERFORMANCE METRICS                \n");
+    fprintf(fp, "====================================================\n");
+    fprintf(fp, "- Total Time        : %u ticks\n", total_time);
+    fprintf(fp, "- CPU Utilization   : %.2f %%\n", cpu_util);
+    fprintf(fp, "- Avg Turnaround    : %.2f ticks\n", avg_tat);
+    fprintf(fp, "- Avg Waiting Time  : %.2f ticks\n", avg_wt);
+    fprintf(fp, "====================================================\n");
+
     fprintf(fp, "End of Simulation\n");
 
     fclose(fp);
-    printf("gantt chart drawing finished : output file = '%s\n", filename);
+    printf("sched (gantt, metric) chart drawing finished : output file = '%s\n", filename);
 }

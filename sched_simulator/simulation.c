@@ -174,3 +174,18 @@ schq_ptr sched_simulation(it_ptr tcase, sched_alg alg){
 
     return result_gant;
 }
+
+int free_sched(schq_ptr sq){
+    if(sq->size == 0) return -1;
+    
+    sch_ptr next_node, curr = sq->front;
+    
+    while(curr){
+        next_node = curr->next;
+        free(curr);
+        curr = next_node;
+    }
+
+    free(sq);
+    return 0;
+}

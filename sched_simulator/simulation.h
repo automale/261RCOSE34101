@@ -13,3 +13,6 @@ unsigned tick(void* q, it_ptr tcase, void** running, void *prev_running, ioq_ptr
 
 // update running & make gant list
 schq_ptr sched_simulation(it_ptr tcase, sched_alg alg);
+
+// free sched list(queue) to block memory leak
+int free_sched(schq_ptr sq);

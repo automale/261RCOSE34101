@@ -5,6 +5,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
+#include <stdbool.h>
 
 #define MIN_DEGREE_MULTI 10
 #define MAX_DEGREE_MULTI 100

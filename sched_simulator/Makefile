@@ -26,16 +26,8 @@ $(OBJS): data_struct.h
 
 # 8. 정리 및 실행 명령어
 clean:
-	rm -rf output_gantt
+	rm -rf output_sched
 	rm -rf output_testcase
-	mkdir output_gantt
-	mkdir output_gantt/fcfs
-	mkdir output_gantt/rr
-	mkdir output_gantt/sjf
-	mkdir output_gantt/pre_sjf
-	mkdir output_gantt/prior
-	mkdir output_gantt/pre_prior
-	mkdir output_testcase
 	rm -f $(OBJS) $(TARGET)
 
 run: $(TARGET)
