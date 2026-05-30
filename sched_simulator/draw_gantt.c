@@ -1,7 +1,7 @@
 #include "draw_gantt.h"
 
 // 간트 차트 생성 및 파일 출력 함수
-void print_sched_to_file(schq_ptr queue, it_ptr tcase, const char *filename) {
+void print_sched_to_file(schq_ptr queue, it_ptr tcase, const char *filename, double *metric) {
     if (queue == NULL || queue->front == NULL) {
         printf("NO schedule data to print out.\n");
         return;
@@ -116,4 +116,8 @@ void print_sched_to_file(schq_ptr queue, it_ptr tcase, const char *filename) {
 
     fclose(fp);
     printf("sched (gantt, metric) chart drawing finished : output file = '%s\n", filename);
+    
+    metric[0] = cpu_util;
+    metric[1] = avg_tat;
+    metric[2] = avg_wt;
 }

@@ -4,6 +4,7 @@
 
 int main(){
     int alg_cnt, alg_num, test_cnt;
+    double metric[3], avg_metric[6][3];
     bool alg_list[6] = {false, };
     it_ptr tcase;
     char test_filename[100], sched_filename[100], new_session;
@@ -69,6 +70,14 @@ int main(){
             }
         }
 
+        // initialize metric data before simulation
+        for(int i = 0; i < 6; i++){
+            for(int j = 0; j < 3; j++){
+                avg_metric[i][j] = 0;
+            }
+        }
+
+        // simulation for each test case
         for(int i = 0; i < test_cnt; i++){
             tcase = test_case_gen();
             sprintf(test_filename, "./output_testcase/testcase_%d.txt", i+1);
@@ -78,15 +87,34 @@ int main(){
                 if(alg_list[alg] == true){
                     sprintf(sched_filename, "./output_sched/%s/%s_gantt_%d.txt", alg_name[alg], alg_name[alg], i+1);
                     sq = sched_simulation(tcase, alg);
-                    print_sched_to_file( sq, tcase, sched_filename );
+                    print_sched_to_file( sq, tcase, sched_filename, metric );
+
+                    avg_metric[alg][0] += metric[0];
+                    avg_metric[alg][1] += metric[1];
+                    avg_metric[alg][2] += metric[2];
+
                     free_sched(sq);
                 }
             }
             test_case_destroyer(tcase);
         }
+
+        printf("\n########### METRIC SUMMARIZE ###########\n\n");
+        printf("----------------------------------------------------------------------------\n");
+        printf("| algorithm | cpu utilization | avg turnaround time | average waiting time |\n");
+        printf("----------------------------------------------------------------------------\n");
+        for(sched_alg alg = fcfs; alg <= pre_prior; alg++){
+            if(alg_list[alg] == true){
+                printf("| %9s | %15f | %19f | %20f |\n", \
+                    alg_name[alg], avg_metric[alg][0] / test_cnt, avg_metric[alg][1] / test_cnt, avg_metric[alg][2] / test_cnt);
+            }
+        }
+        printf("----------------------------------------------------------------------------\n");
+        printf("\n########### Simulation terminated ###########\n\n");
+
+        // algorithm selection initialize
         for(sched_alg alg = 0; alg < 6; alg++){alg_list[alg] = false;}
 
-        printf("\n########### Simulation terminated ###########\n\n");
         printf("PRESS Y to remove output files and start a new session\n");
         printf("and PRESS T to terminate the simulator.\n");
         while(1){
