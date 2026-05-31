@@ -22,8 +22,6 @@
 
 #define DEVICES 10
 
-#define TEST_CASE 50
-
 // sched algorithm select
 typedef enum {fcfs, rr, sjf, pre_sjf, prior, pre_prior} sched_alg;
 // ========================================

@@ -6,7 +6,7 @@
 tq_ptr update_r_io_queue(rq_Qptr rq, it_ptr tcase, tq_ptr running, ioq_ptr *io_qs, unsigned *tcnt_ptr, unsigned curr_time);
 
 // sjf, priority algorithm tick
-tpq_ptr update_r_io_pqueue(rq_PQptr rpq, it_ptr tcase, tpq_ptr running, ioq_ptr *io_qs, unsigned *tcnt_ptr, unsigned curr_time);
+tpq_ptr update_r_io_pqueue(rq_PQptr rpq, it_ptr tcase, tpq_ptr running, ioq_ptr *io_qs, unsigned *tcnt_ptr, unsigned curr_time, sched_alg alg);
 
 // update running per clock
 unsigned tick(void* q, it_ptr tcase, void** running, void *prev_running, ioq_ptr *io_qs, unsigned curr_time, unsigned *tcnt_ptr, sched_alg alg);

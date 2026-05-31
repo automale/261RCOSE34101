@@ -112,7 +112,7 @@ int print_test_case_to_file(it_ptr tcase, const char* filename) {
     fprintf(fp, "========================================================================================\n\n");
 
     // =======================================================================
-    // Section 1: Task-centric view (도착 시간 순서대로 정렬된 태스크 출력)
+    // Section 1: Task-centric view (non-decreasing order in arrival time)
     // =======================================================================
     fprintf(fp, "----------------------------------------------------------------------------------------\n");
     fprintf(fp, "[SECTION 1] TASK-CENTRIC VIEW (Sorted by Arrival Time)\n");
@@ -128,7 +128,7 @@ int print_test_case_to_file(it_ptr tcase, const char* filename) {
             fprintf(fp, "    -> I/O Requests:\n");
             for (unsigned j = 0; j < t->io_num; j++) {
                 io_config *io = &t->io_list[j];
-                // io_time은 해당 프로세스가 CPU를 점유한 누적 시간 기준입니다.
+                // io_time
                 fprintf(fp, "       - Request at CPU Time %4u : Device %2u (Duration: %4u ms)\n", \
                         io->io_time, io->device_num, io->duration);
             }
@@ -137,13 +137,13 @@ int print_test_case_to_file(it_ptr tcase, const char* filename) {
     }
 
     // =======================================================================
-    // Section 2: Device-centric view (디바이스별 대기 큐 예상 요청 목록)
+    // Section 2: Device-centric view (expected waiting task per device)
     // =======================================================================
     fprintf(fp, "----------------------------------------------------------------------------------------\n");
     fprintf(fp, "[SECTION 2] DEVICE-CENTRIC VIEW (Expected Requests per Device)\n");
     fprintf(fp, "----------------------------------------------------------------------------------------\n");
     
-    // DEVICES 매크로(10)를 기준으로 각 디바이스에 꽂힐 I/O 요청을 긁어모읍니다.
+    // I/O request accmulate
     for (unsigned dev = 0; dev < DEVICES; dev++) {
         int has_req = 0;
         fprintf(fp, "[Device %2u]\n", dev);
@@ -154,7 +154,7 @@ int print_test_case_to_file(it_ptr tcase, const char* filename) {
             for (unsigned j = 0; j < t->io_num; j++) {
                 if (t->io_list[j].device_num == dev) {
                     if (!has_req) {
-                        // 해당 디바이스에 요청이 하나라도 있으면 헤더를 출력합니다.
+                        // if there's at least one request expected, header will be printed out
                         fprintf(fp, "    Req PID | Req CPU Time | Duration \n");
                         fprintf(fp, "   ---------+--------------+----------\n");
                         has_req = 1;
@@ -165,7 +165,7 @@ int print_test_case_to_file(it_ptr tcase, const char* filename) {
             }
         }
         
-        // 해당 디바이스를 호출하는 프로세스가 하나도 없을 경우
+        // no io request for that device
         if (!has_req) {
             fprintf(fp, "    (No I/O requests for this device)\n");
         }
@@ -176,7 +176,7 @@ int print_test_case_to_file(it_ptr tcase, const char* filename) {
     fprintf(fp, "                                      END OF DATA                                       \n");
     fprintf(fp, "========================================================================================\n");
 
-    // 3. 파일 닫기
+    // 3. close file
     fclose(fp);
     printf("Successfully wrote test case to '%s'\n", filename);
     

@@ -65,7 +65,6 @@ void pre_sjf_alg(rq_PQptr rpq, tpq_ptr *running){
     }
     // preemption
     else if(cand->info.priority < (*running)->info.priority){
-        (*running)->info.priority = (*running)->info.remaining;
         insert(rpq, *running);
         *running = extract_min(rpq);
     }

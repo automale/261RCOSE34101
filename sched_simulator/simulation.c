@@ -50,7 +50,7 @@ tq_ptr update_r_io_queue(rq_Qptr rq, it_ptr tcase, tq_ptr running, ioq_ptr *io_q
 }
 
 // sjf, priority algorithm tick
-tpq_ptr update_r_io_pqueue(rq_PQptr rpq, it_ptr tcase, tpq_ptr running, ioq_ptr *io_qs, unsigned *tcnt_ptr, unsigned curr_time){
+tpq_ptr update_r_io_pqueue(rq_PQptr rpq, it_ptr tcase, tpq_ptr running, ioq_ptr *io_qs, unsigned *tcnt_ptr, unsigned curr_time, sched_alg alg){
     // io_queue updating
     for(unsigned i = 0; i < DEVICES; i++){
         if(io_qs[i]->size > 0){
@@ -70,6 +70,7 @@ tpq_ptr update_r_io_pqueue(rq_PQptr rpq, it_ptr tcase, tpq_ptr running, ioq_ptr 
         if(tcase->task_list[*next_arrival_ptr].arrival == curr_time){
             tpq_ptr new_node = (tpq_ptr)malloc(sizeof(task_pq));
             new_node->info = tcase->task_list[*next_arrival_ptr];
+            if(alg == pre_sjf || alg == sjf) new_node->info.priority = new_node->info.remaining;
             insert(rpq, new_node);
             *next_arrival_ptr += 1;
         }
@@ -83,6 +84,8 @@ tpq_ptr update_r_io_pqueue(rq_PQptr rpq, it_ptr tcase, tpq_ptr running, ioq_ptr 
             *tcnt_ptr += 1;
             return NULL;
         }
+        if(alg == pre_sjf || alg == sjf) running->info.priority = running->info.remaining;
+
         unsigned idx, extime;
         idx = running->info.current_io_idx;
         extime =  running->info.burst - running->info.remaining;
@@ -113,7 +116,7 @@ unsigned tick(void* q, it_ptr tcase, void** running, void *prev_running, ioq_ptr
         else return (unsigned)(-1);
     }
     else{
-        *running = update_r_io_pqueue((rq_PQptr)q, tcase, (tpq_ptr)*running, io_qs, tcnt_ptr, curr_time);
+        *running = update_r_io_pqueue((rq_PQptr)q, tcase, (tpq_ptr)*running, io_qs, tcnt_ptr, curr_time, alg);
         switch(alg){
             case sjf : // running termination | io request waiting
                 sjf_alg((rq_PQptr)q, (tpq_ptr*)running);

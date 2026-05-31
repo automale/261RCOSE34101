@@ -16,7 +16,7 @@ void print_sched_to_file(schq_ptr queue, it_ptr tcase, const char *filename, dou
     unsigned total_time = 0;
     unsigned idle_time = 0;
     
-    // PID를 인덱스로 사용하여 프로세스별 최종 완료 시간(Completion Time)을 추적할 배열
+    // idex = PID, Completion Time track
     unsigned *comp_time = malloc(tcase->size * sizeof(unsigned)); 
     
     sch_ptr temp = queue->front;
